@@ -34,11 +34,29 @@ W pliku tekstowym w postaci JSON będą umieszczone parametry urządzenia wraz z
 ```
 Zmiana wartości parametrów powinna być możliwa w trakcie działania programu i odzwierciedlana w wartości zwracanej przez metodę ```get_statuses()```.
 
-####1. Narzędzie powinno dostarczać następujący interfejs api:
-####* metoda ```start()``` - uruchamia DeviceMonitor w oddzielnym wątku
-####* metoda ```stop()``` - zatrzymuje wątek DeviceMonitor
-####* metoda ```get_statuses()``` - zwraca słownik z monitorowanymi urządzeniami (jak w przykładzie 1)
-####2. Metody ```start()```, ```stop()```, ```get_statuses()``` powinny być thread-safe, w szczególności metody ```start()``` i ```stop()``` wołane będą z głównego wątku aplikacji używającej DeviceMonitor a metoda ```get_statuses()``` może być wywoływana z dowolnego innego wątku aplikacji.
-####3. Narzędzie powinno umożliwiać łatwe dodawanie nowych typów urządzeń. Istotne jest, aby dodanie obsługi nowego typu urządzenia nie wymagało zmian w kodzie samej biblioteki.
-####4. Wymagane jest dostarczenie testowego skryptu używającego biblioteki DeviceMonitor wraz z symulowanym urządzeniem który będzie wypisywał co sekundę parametry tego urządzenia.
-####5. Kod powinien być w 100% pokryty testami jednostkowymi.
+1. Narzędzie powinno dostarczać następujący interfejs api:
+    * metoda ```start()``` - uruchamia DeviceMonitor w oddzielnym wątku
+    * metoda ```stop()``` - zatrzymuje wątek DeviceMonitor
+    * metoda ```get_statuses()``` - zwraca słownik z monitorowanymi urządzeniami (jak w przykładzie 1)
+    
+
+2. Metody ```start()```, ```stop()```, ```get_statuses()``` powinny być thread-safe, w szczególności metody ```start()``` i ```stop()``` wołane będą z głównego wątku aplikacji używającej DeviceMonitor a metoda ```get_statuses()``` może być wywoływana z dowolnego innego wątku aplikacji.
+   
+
+3. Narzędzie powinno umożliwiać łatwe dodawanie nowych typów urządzeń. Istotne jest, aby dodanie obsługi nowego typu urządzenia nie wymagało zmian w kodzie samej biblioteki.
+   
+
+4. Wymagane jest dostarczenie testowego skryptu używającego biblioteki DeviceMonitor wraz z symulowanym urządzeniem który będzie wypisywał co sekundę parametry tego urządzenia.
+   
+
+5. Kod powinien być w 100% pokryty testami jednostkowymi.
+
+
+Odpowiadając na pytania:
+1) można tak założyć. Można też skorzystać z jakiegoś dodatkowego pliku konfiguracyjnego który powiąże id ze ścieżką do pliku. Biblioteka sama w sobie nie powinna raczej nadawać id'ków.
+2) Zakładamy że lista parameterów dla danego typu urządzenia jest statycznie zdefiniowana. Konkretnie, w przypadku symulowanego poprzez plik tekstowy urządzenia lista parameterów nie zależy od zawartość pliku. Jeżeli jakiegoś parameteru nie ma w pliku to w rezultacie funkcji get_statuses wartość parametru powinna być None, a jeżeli są w pliku nieznane parametry to są one ignorowane.
+3) Plik tesktowy z parameterami dotyczy tylko i wyłącznie urządzenia symulowanego (czyli jednego z wielu typów urządzeń). Dodanie nowego typu urządzenia oznacza, że np. będzie można odczytywać parametery z pralki automatycznej poprzez protokół MQTT. Chodzi o to, żeby dodanie obsługi takiego nowego typu urządzenia było proste z punktu widzenia programisty. Po za tym można założyć że lista urządzeń do monitorowania jest zdefiniowana w momencie uruchamiania programu i nie zmienia się w trakcie jego działania, ale na tej liście mogą się znajdowąć urządzenia różnego typu. 
+
+Typ urządzenia jest zdefiniowany poprzez zestaw jego parameterów do monitorowania oraz sposób w jakim można się z nim komunikować. Przykładowo może to być zasilacz CCR z którym komunikujemy się po magistrali RS485 i protokołem JBUS. Może to być moduł monitorowania sygnałów logicznych z którym komunikujemy się poprzez MODBUS TCP. Biblioteka DeviceMonitor ma być elementem pośredniczącym pomiędzy dowolnym urządzeniem który chcemy monitorować a jakimś systemem prezentujacym wartości monitorowanych parameterów.
+
+Typ urządzania które symulujemy poprzez plik tekstowy jest tylko i wyłącznie przykładem implementacji jednego z wielu możliwych typów urządzenia. Jego celem jest tylko i wyłącznie zaprezentowanie działania samej biblioteki DeviceMonitor.
