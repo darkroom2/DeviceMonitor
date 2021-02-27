@@ -1,14 +1,24 @@
 import json
+import sched
 
 
 class DeviceMonitor:
-    monitored_devices = []
-    statuses = dict()
-
     def __init__(self, interval):
         self.interval = interval
+        self.monitored_devices = []
+        self.statuses = dict()
+
+        self.s = sched.scheduler()
+
+    def start(self):
+        self.update_statuses()
+        self.s.run()
 
     def update_statuses(self):
+        self.s.enter(self.interval, 0, self.update_statuses)
+
+        success = False
+
         # For every device in path...
         for device in self.monitored_devices:
             # ...parse device parameters
@@ -22,8 +32,12 @@ class DeviceMonitor:
                 # ......add parameter value to new parameter name key
                 altered_parsed_data[new_key] = parsed_data[key]
 
+            # TODO: LOCK HERE and set success = True
             self.statuses[str(device.id)] = altered_parsed_data
-        return True
+            success = True
+
+        print(self.statuses)
+        return success
 
     def get_statuses(self):
         return self.statuses

@@ -34,11 +34,11 @@ W pliku tekstowym w postaci JSON będą umieszczone parametry urządzenia wraz z
 ```
 Zmiana wartości parametrów powinna być możliwa w trakcie działania programu i odzwierciedlana w wartości zwracanej przez metodę ```get_statuses()```.
 
-###1. Narzędzie powinno dostarczać następujący interfejs api:
-* metoda ```start()``` - uruchamia DeviceMonitor w oddzielnym wątku
-* metoda ```stop()``` - zatrzymuje wątek DeviceMonitor
-* metoda ```get_statuses()``` - zwraca słownik z monitorowanymi urządzeniami (jak w przykładzie 1)
-2. Metody ```start()```, ```stop()```, ```get_statuses()``` powinny być thread-safe, w szczególności metody ```start()``` i ```stop()``` wołane będą z głównego wątku aplikacji używającej DeviceMonitor a metoda ```get_statuses()``` może być wywoływana z dowolnego innego wątku aplikacji.
-3. Narzędzie powinno umożliwiać łatwe dodawanie nowych typów urządzeń. Istotne jest, aby dodanie obsługi nowego typu urządzenia nie wymagało zmian w kodzie samej biblioteki.
-4. Wymagane jest dostarczenie testowego skryptu używającego biblioteki DeviceMonitor wraz z symulowanym urządzeniem który będzie wypisywał co sekundę parametry tego urządzenia.
-5. Kod powinien być w 100% pokryty testami jednostkowymi.
+####1. Narzędzie powinno dostarczać następujący interfejs api:
+####* metoda ```start()``` - uruchamia DeviceMonitor w oddzielnym wątku
+####* metoda ```stop()``` - zatrzymuje wątek DeviceMonitor
+####* metoda ```get_statuses()``` - zwraca słownik z monitorowanymi urządzeniami (jak w przykładzie 1)
+####2. Metody ```start()```, ```stop()```, ```get_statuses()``` powinny być thread-safe, w szczególności metody ```start()``` i ```stop()``` wołane będą z głównego wątku aplikacji używającej DeviceMonitor a metoda ```get_statuses()``` może być wywoływana z dowolnego innego wątku aplikacji.
+####3. Narzędzie powinno umożliwiać łatwe dodawanie nowych typów urządzeń. Istotne jest, aby dodanie obsługi nowego typu urządzenia nie wymagało zmian w kodzie samej biblioteki.
+####4. Wymagane jest dostarczenie testowego skryptu używającego biblioteki DeviceMonitor wraz z symulowanym urządzeniem który będzie wypisywał co sekundę parametry tego urządzenia.
+####5. Kod powinien być w 100% pokryty testami jednostkowymi.
