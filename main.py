@@ -3,7 +3,7 @@ import threading
 from pathlib import Path
 from time import sleep
 
-import devicemonitorlib.devicemonitorfunctions as device_monitor
+import devicemonitorlib as device_monitor
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -98,6 +98,22 @@ def main():
     print('Main thread calling get_statuses()...')
     print(device_monitor.get_statuses())
     print('Main thread called get_statuses() successfully!')
+
+    sleep(2)
+    print('Changing device parameter in file zasilacz_00001.json...')
+    v1 = 450
+    v2 = 666
+    file = Path('./devices/zasilacz_00001.json')
+    text_orig = file.read_text()
+    text_changed = text_orig.replace(f'"voltage": {v1}', f'"voltage": {v2}')
+    file.write_text(text_changed)
+    print(f'Changed voltage from {v1} to {v2}')
+
+    sleep(5)
+
+    print('Reverting device parameter changes...')
+    file.write_text(text_orig)
+    print(f'Reverted voltage from {v2} to {v1}')
 
     sleep(5)
 
