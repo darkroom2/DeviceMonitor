@@ -12,7 +12,7 @@ Zakładamy, że parametry urządzeń nie zmieniają się szybko (raz na kilka se
 Możliwe typy parametrów to ```string```, ```int```, ```float```, ```bool```.  
 Każde monitorowane urządzenie ma mieć przypisany identyfikator, z którym powiązane będą jego parametry.
 
-__Przykład 1.__  
+**Przykład 1.**  
 Jest dany typ zasilacza lamp lotniskowych który umożliwia odczytanie aktualnego prądu wyjściowego oraz napięcia wyjściowego.
 Zakładając, że są trzy zasilacze do monitorowania a ich identyfikatory to ```{1, 2, 3}```, DeviceMonitor powinien umożliwiać
 pobranie aktualnych wartości prądu i napięcia wyjściowego ze wszystkich zasilaczy w postaci:
@@ -34,6 +34,7 @@ W pliku tekstowym w postaci JSON będą umieszczone parametry urządzenia wraz z
 ```
 Zmiana wartości parametrów powinna być możliwa w trakcie działania programu i odzwierciedlana w wartości zwracanej przez metodę ```get_statuses()```.
 
+
 1. Narzędzie powinno dostarczać następujący interfejs api:
     * metoda ```start()``` - uruchamia DeviceMonitor w oddzielnym wątku
     * metoda ```stop()``` - zatrzymuje wątek DeviceMonitor
@@ -44,19 +45,34 @@ Zmiana wartości parametrów powinna być możliwa w trakcie działania programu
    
 
 3. Narzędzie powinno umożliwiać łatwe dodawanie nowych typów urządzeń. Istotne jest, aby dodanie obsługi nowego typu urządzenia nie wymagało zmian w kodzie samej biblioteki.
-   
+
 
 4. Wymagane jest dostarczenie testowego skryptu używającego biblioteki DeviceMonitor wraz z symulowanym urządzeniem który będzie wypisywał co sekundę parametry tego urządzenia.
    
 
 5. Kod powinien być w 100% pokryty testami jednostkowymi.
 
+FAQ:
+---
 
-Odpowiadając na pytania:
-1) można tak założyć. Można też skorzystać z jakiegoś dodatkowego pliku konfiguracyjnego który powiąże id ze ścieżką do pliku. Biblioteka sama w sobie nie powinna raczej nadawać id'ków.
-2) Zakładamy że lista parameterów dla danego typu urządzenia jest statycznie zdefiniowana. Konkretnie, w przypadku symulowanego poprzez plik tekstowy urządzenia lista parameterów nie zależy od zawartość pliku. Jeżeli jakiegoś parameteru nie ma w pliku to w rezultacie funkcji get_statuses wartość parametru powinna być None, a jeżeli są w pliku nieznane parametry to są one ignorowane.
-3) Plik tesktowy z parameterami dotyczy tylko i wyłącznie urządzenia symulowanego (czyli jednego z wielu typów urządzeń). Dodanie nowego typu urządzenia oznacza, że np. będzie można odczytywać parametery z pralki automatycznej poprzez protokół MQTT. Chodzi o to, żeby dodanie obsługi takiego nowego typu urządzenia było proste z punktu widzenia programisty. Po za tym można założyć że lista urządzeń do monitorowania jest zdefiniowana w momencie uruchamiania programu i nie zmienia się w trakcie jego działania, ale na tej liście mogą się znajdowąć urządzenia różnego typu. 
+*"Każde monitorowane urządzenie ma mieć przypisany identyfikator, z którym powiązane będą jego parametry."*
 
-Typ urządzenia jest zdefiniowany poprzez zestaw jego parameterów do monitorowania oraz sposób w jakim można się z nim komunikować. Przykładowo może to być zasilacz CCR z którym komunikujemy się po magistrali RS485 i protokołem JBUS. Może to być moduł monitorowania sygnałów logicznych z którym komunikujemy się poprzez MODBUS TCP. Biblioteka DeviceMonitor ma być elementem pośredniczącym pomiędzy dowolnym urządzeniem który chcemy monitorować a jakimś systemem prezentujacym wartości monitorowanych parameterów.
+**P:** W zadaniu, każde urządzenie posiada swój identyfikator, czy biblioteka ma go sama przypisać? Bo jeśli biblioteka sama przypisuje, to może być trudno później fizycznie zidentyfikować urządzenie, jeśli wymagałoby naprawy lub wymiany. W związku z tym, czy mogę założyć, że identyfikator urządzenia zawarty jest np. w nazwie pliku z odczytami parametrów danego urządzenia?
 
-Typ urządzania które symulujemy poprzez plik tekstowy jest tylko i wyłącznie przykładem implementacji jednego z wielu możliwych typów urządzenia. Jego celem jest tylko i wyłącznie zaprezentowanie działania samej biblioteki DeviceMonitor.
+**O:** Można tak założyć. Można też skorzystać z jakiegoś dodatkowego pliku konfiguracyjnego który powiąże id ze ścieżką do pliku. Biblioteka sama w sobie nie powinna raczej nadawać id'ków.
+
+*"Monitorowanie urządzeń ma polegać na możliwości ciągłego odczytania zdefiniowanej dla danego typu urządzenia listy parametrów."*
+
+**P:** Czy biblioteka ma monitorować wszystkie parametry zawarte w pliku tekstowym, czy ma być możliwość zdefiniowania własnej listy tj. podzbioru dostępnych w pliku parametrów, które mają być monitorowane?
+
+**O:** Zakładamy, że lista parametrów dla danego typu urządzenia jest statycznie zdefiniowana. Konkretnie, w przypadku symulowanego poprzez plik tekstowy urządzenia lista parametrów nie zależy od zawartość pliku. Jeżeli jakiegoś parametru nie ma w pliku to w rezultacie funkcji get_statuses wartość parametru powinna być None, a jeżeli są w pliku nieznane parametry to są one ignorowane.
+
+*"Narzędzie powinno umożliwiać łatwe dodawanie nowych typów urządzeń. Istotne jest, aby dodanie obsługi nowego typu urządzenia nie wymagało zmian w kodzie samej biblioteki."*
+
+**P:** Pytanie łączy się z poprzednim. Czy dodanie nowego typu ma polegać na dodaniu do listy monitorowanych urządzeń konkretnego "urządzenia" (wraz z jego identyfikatorem, listą parametrów oraz ścieżką do pliku z którego odczytywane są parametry)?
+
+**O:** Plik tekstowy z parametrami dotyczy wyłącznie urządzenia symulowanego (czyli jednego z wielu typów urządzeń). Dodanie nowego typu urządzenia oznacza, że np. będzie można odczytywać parametry z pralki automatycznej poprzez protokół MQTT. Chodzi o to, żeby dodanie obsługi takiego nowego typu urządzenia było proste z punktu widzenia programisty. Poza tym można założyć, że lista urządzeń do monitorowania jest zdefiniowana w momencie uruchamiania programu i nie zmienia się w trakcie jego działania, ale na tej liście mogą się znajdować urządzenia różnego typu.
+
+**P:** Co to jest 'typ urządzenia'?
+
+**O:** Typ urządzenia jest zdefiniowany poprzez zestaw jego parametrów do monitorowania oraz sposób w jakim można się z nim komunikować. Przykładowo może to być zasilacz CCR z którym komunikujemy się po magistrali RS485 i protokołem JBUS. Może to być moduł monitorowania sygnałów logicznych z którym komunikujemy się poprzez MODBUS TCP. Biblioteka DeviceMonitor ma być elementem pośredniczącym pomiędzy dowolnym urządzeniem który chcemy monitorować a jakimś systemem prezentującym wartości monitorowanych parametrów. Typ urządzania, które symulujemy poprzez plik tekstowy jest wyłącznie przykładem implementacji jednego z wielu możliwych typów urządzenia. Jego celem jest wyłącznie zaprezentowanie działania samej biblioteki DeviceMonitor.
