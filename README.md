@@ -76,3 +76,9 @@ FAQ:
 **P:** Co to jest 'typ urządzenia'?
 
 **O:** Typ urządzenia jest zdefiniowany poprzez zestaw jego parametrów do monitorowania oraz sposób w jakim można się z nim komunikować. Przykładowo może to być zasilacz CCR z którym komunikujemy się po magistrali RS485 i protokołem JBUS. Może to być moduł monitorowania sygnałów logicznych z którym komunikujemy się poprzez MODBUS TCP. Biblioteka DeviceMonitor ma być elementem pośredniczącym pomiędzy dowolnym urządzeniem który chcemy monitorować a jakimś systemem prezentującym wartości monitorowanych parametrów. Typ urządzania, które symulujemy poprzez plik tekstowy jest wyłącznie przykładem implementacji jednego z wielu możliwych typów urządzenia. Jego celem jest wyłącznie zaprezentowanie działania samej biblioteki DeviceMonitor.
+
+TODO:
+---
+
+* dodac testy
+* ogarnac zmienne globalne
