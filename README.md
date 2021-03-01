@@ -117,7 +117,7 @@ Wynik jest w formacie słownika, gdzie kluczami są identyfikary urządzeń, a w
 }
 ```
 
-Uwaga 1: ```device_list``` jest listą urządzeń, które mają być monitorowane. Elementami listy, powinny być obiekty posiadające metodę ```data()```, która powinna zwracać ```string``` w formacie JSON, zawierający parametry urządzenia.  
+Uwaga 1: ```device_list``` jest listą urządzeń, które mają być monitorowane. Elementami listy, powinny być obiekty posiadające atrybuty ```id``` i ```param_list``` oraz metodę ```data()```, która powinna zwracać ```string``` w formacie JSON, zawierający parametry urządzenia. Atrybut ```id``` to identyfikator urządzenia, natomiast ```param_list``` jest listą parametrów, które mają być monitorowane.  
 Uwaga 2: ```update_interval``` to czas (w sekundach), co jaki ma następować odświeżanie (pobieranie) parametrów urządzeń.
 
 Testowanie:
