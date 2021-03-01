@@ -108,7 +108,7 @@ dm.start(update_interval, device_list)
 result = dm.get_statuses()
 dm.stop()
 ```
-Wynik jest w formacie słownika, gdzie kluczami są identyfikary urządzeń, a wartościami słownik z parametrami.
+Wynik jest w formacie słownika, gdzie kluczami są identyfikatory urządzeń, a wartościami słownik z parametrami.
 ```python
 {
     '1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None},
