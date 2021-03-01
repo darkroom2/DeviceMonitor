@@ -119,12 +119,14 @@ def main():
 
     print('Main thread stops the DeviceMonitor...')
     device_monitor.stop()
+    sleep(1)
     print('Main thread stopped the DeviceMoniotor successfully!')
 
     sleep(5)
 
     print('Main thread stops the printer thread...')
     stop_scheduler(s)
+    sleep(1)
     print('Printer thread stopped successfully!')
 
     sleep(5)

@@ -135,7 +135,49 @@ cd DeviceMonitor/
 ```bash
 python test.py
 ```
-
+W wyniku na konsoli wypisane zostają komunikaty, takie jak:
+```text
+Main thread is starting the DeviceMonitor...
+DeviceMonitor started successfully!
+Main thread is creating a new thread with scheduler that periodically calls the get_statuses() method...
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+Thread with print scheduler started successfully!
+Main thread sleeping for 5 secs while other thread prints...
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+Main thread calling get_statuses()...
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+Main thread called get_statuses() successfully!
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+Changing device parameter in file zasilacz_00001.json...
+Changed voltage from 450 to 666!
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 666, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 666, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 666, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 666, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+Reverting device parameter changes...
+Reverted voltage from 666 to 450!
+{'1': {'output_current': 0.5, 'output_voltage': 666, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+{'1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None}, '2': {'output_current': 0.6, 'output_voltage': 449}, '3': {'output_current': 0.4, 'output_voltage': 451}}
+Main thread stops the DeviceMonitor...
+Main thread stopped the DeviceMoniotor successfully!
+None
+None
+None
+None
+Main thread stops the printer thread...
+Printer thread stopped successfully!
+Main thread is ending...
+```
 
 TODO:
 ---
+* ???
