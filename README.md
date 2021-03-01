@@ -128,7 +128,7 @@ Aby uruchomić skrypt testowy, należy sklonować repozytorium:
 ```bash
 git clone https://github.com/darkroom2/DeviceMonitor.git
 ```
-Przejść do folderu biblioteki i uruchomić skrypt ```test.py```:
+Następnie przejść do folderu biblioteki i uruchomić skrypt ```test.py```:
 ```bash
 cd DeviceMonitor/
 ```
