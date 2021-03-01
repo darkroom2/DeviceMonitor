@@ -5,12 +5,6 @@ import threading
 
 from typing import Union
 
-# TODO:
-#
-# - zrobic strukture pip package library
-#
-# - dodac testy
-
 # Slownik zawierajacy statusy urzadzen
 statuses = dict()
 
@@ -20,7 +14,8 @@ s = sched.scheduler()
 # Mutex blokujacy czytanie/pisanie zasobu
 lock = threading.Lock()
 
-running = True
+# Zmienna informujaca czy bilbioteka zostala uruchomiona
+running = None
 
 
 def start(interval: int, devices_list: list):
@@ -35,6 +30,8 @@ def start(interval: int, devices_list: list):
     """
     t = threading.Thread(target=start_monitoring, args=(interval, devices_list))
     t.start()
+    global running
+    running = True
 
 
 def stop():
@@ -42,11 +39,31 @@ def stop():
 
     """
     # Wyczyszczenie schedulera spowoduje czyste zakonczenie watku
+    global running, s
     for event in s.queue:
         s.cancel(event)
 
-    global running
     running = False
+    s = sched.scheduler()
+    with lock:
+        statuses.clear()
+
+
+def get_statuses() -> Union[dict, None]:
+    """Funkcja zwracajaca status monitorowanych urzadzen
+
+    Returns
+    -------
+    dict
+        Statusy monitorowanych urzadzen
+    None
+        Zwracane gdy monitorowanie zostalo zatrzymane
+
+    """
+    with lock:
+        if running:
+            return statuses
+    return None
 
 
 def start_monitoring(interval: int, devices_list: list):
@@ -95,19 +112,3 @@ def update_status(device):
     with lock:
         statuses[str(device.id)] = altered_parsed_data
 
-
-def get_statuses() -> Union[dict, None]:
-    """Funkcja zwracajaca status monitorowanych urzadzen
-
-    Returns
-    -------
-    dict
-        Statusy monitorowanych urzadzen
-    None
-        Zwracane gdy monitorowanie zostalo zatrzymane
-
-    """
-    with lock:
-        if running:
-            return statuses
-    return None

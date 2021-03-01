@@ -80,5 +80,4 @@ FAQ:
 TODO:
 ---
 
-* dodac testy
 * ogarnac zmienne globalne
