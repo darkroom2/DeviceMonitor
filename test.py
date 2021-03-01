@@ -70,7 +70,7 @@ def main():
         # DeviceByHTTP('4', ['current', 'voltage', 'pressure'], '127.0.0.1', 6666),
     ]
 
-    # Jak czesto odswiezac parametry urzadzenia
+    # Jak czesto odswiezac parametry urzadzen
     update_interval = 1
 
     print('Main thread is starting the DeviceMonitor...')

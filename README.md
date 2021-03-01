@@ -3,7 +3,7 @@
 Biblioteka do monitorowania różnego rodzaju urządzeń.
 
 Zadanie:
----
+===
 
 Zaprojektować i zaimplementować wraz z testami bibliotekę DeviceMonitor do monitorowania różnego rodzaju urządzeń.
 
@@ -76,6 +76,56 @@ FAQ:
 **P:** Co to jest 'typ urządzenia'?
 
 **O:** Typ urządzenia jest zdefiniowany poprzez zestaw jego parametrów do monitorowania oraz sposób w jakim można się z nim komunikować. Przykładowo może to być zasilacz CCR z którym komunikujemy się po magistrali RS485 i protokołem JBUS. Może to być moduł monitorowania sygnałów logicznych z którym komunikujemy się poprzez MODBUS TCP. Biblioteka DeviceMonitor ma być elementem pośredniczącym pomiędzy dowolnym urządzeniem który chcemy monitorować a jakimś systemem prezentującym wartości monitorowanych parametrów. Typ urządzania, które symulujemy poprzez plik tekstowy jest wyłącznie przykładem implementacji jednego z wielu możliwych typów urządzenia. Jego celem jest wyłącznie zaprezentowanie działania samej biblioteki DeviceMonitor.
+
+Rozwiązanie:
+===
+Repozytorium zawiera bibliotekę do monitorowania różnego rodzaju urządzeń.
+
+Instalacja:
+---
+Zainstaluj używając programu ```pip```:  
+```
+pip install git+git://github.com/darkroom2/DeviceMonitor.git
+```
+
+Użycie:
+---
+```python
+import devicemonitorlib as dm
+
+# Lista urzadzen do monitorowania.
+device_list = [
+   DeviceByFile('1', ['current', 'voltage', 'pressure'], './devices/zasilacz_00001.json'),
+   DeviceByFile('2', ['current', 'voltage'], './devices/zasilacz_00002.json'),
+   DeviceByFile('3', ['current', 'voltage'], './devices/zasilacz_00003.json'),
+   DeviceByHTTP('4', ['current', 'voltage', 'pressure'], '127.0.0.1', 6666),
+]
+
+# Jak czesto odswiezac parametry urzadzen
+update_interval = 1
+
+dm.start(update_interval, device_list)
+result = dm.get_statuses()
+dm.stop()
+```
+Wynik jest w formacie słownika, gdzie kluczami są identyfikary urządzeń, a wartościami słownik z parametrami.
+```python
+{
+    '1': {'output_current': 0.5, 'output_voltage': 450, 'output_pressure': None},
+    '2': {'output_current': 0.6, 'output_voltage': 449},
+    '3': {'output_current': 0.4, 'output_voltage': 451}
+}
+```
+
+Uwaga 1: ```device_list``` jest listą urządzeń, które mają być monitorowane. Elementami listy, powinny być obiekty posiadające metodę ```data()```, która powinna zwracać ```string``` w formacie JSON, zawierający parametry urządzenia.  
+Uwaga 2: ```update_interval``` to czas (w sekundach), co jaki ma następować odświeżanie (pobieranie) parametrów urządzeń.
+
+Testowanie:
+---
+W repozytorium dostępny jest skrypt testowy ```test.py``` prezentujący działanie biblioteki. W folderze ```devices/``` znajdują się pliki tekstowe symulujące urządzenia.  
+
+
+
 
 TODO:
 ---
