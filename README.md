@@ -123,7 +123,11 @@ Uwaga 2: ```update_interval``` to czas (w sekundach), co jaki ma następować od
 Testowanie:
 ---
 Kod biblioteki jest pokryty testami jednostkowymi. Testy znajdują się w folderze ```tests/```.
+```text
+tests\test_devicemonitorfunctions.py ...................                 [100%]
 
+============================= 19 passed in 43.32s =============================
+```
 W repozytorium dostępny jest skrypt testowy ```test.py``` prezentujący działanie biblioteki. W folderze ```devices/``` znajdują się pliki tekstowe symulujące urządzenia.
 
 Aby uruchomić skrypt testowy, należy sklonować repozytorium:  
