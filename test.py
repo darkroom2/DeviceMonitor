@@ -10,7 +10,7 @@ import devicemonitorlib as device_monitor
 # Klasa reprezentujaca urzadzenie KONIECZNIE musi dostarczyć nastepujace rzeczy:#
 # - metode `data()`, zwracajaca string JSON z parametrami urzadzenia,           #
 # - atrybut `id`, identyfikujacy urzadzenie                                     #
-# - atrybut `param_list`, okreslajacy jakie parametry nalezy monitorowa         #
+# - atrybut `param_list`, okreslajacy jakie parametry nalezy monitorowac        #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 class DeviceByFile:
