@@ -30,8 +30,9 @@ def start(interval: int, devices_list: list):
     """
     t = threading.Thread(target=start_monitoring, args=(interval, devices_list))
     t.start()
-    global running
-    running = True
+    with lock:
+        global running
+        running = True
 
 
 def stop():
@@ -39,13 +40,14 @@ def stop():
 
     """
     # Wyczyszczenie schedulera spowoduje czyste zakonczenie watku
-    global running, s
-    for event in s.queue:
-        s.cancel(event)
-
-    running = False
-    s = sched.scheduler()
     with lock:
+        global running, s
+
+        for event in s.queue:
+            s.cancel(event)
+
+        running = False
+        s = sched.scheduler()
         statuses.clear()
 
 
