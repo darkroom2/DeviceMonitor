@@ -107,13 +107,13 @@ def main():
     text_orig = file.read_text()
     text_changed = text_orig.replace(f'"voltage": {v1}', f'"voltage": {v2}')
     file.write_text(text_changed)
-    print(f'Changed voltage from {v1} to {v2}')
+    print(f'Changed voltage from {v1} to {v2}!')
 
     sleep(5)
 
     print('Reverting device parameter changes...')
     file.write_text(text_orig)
-    print(f'Reverted voltage from {v2} to {v1}')
+    print(f'Reverted voltage from {v2} to {v1}!')
 
     sleep(5)
 
