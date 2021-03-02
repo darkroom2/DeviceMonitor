@@ -1,5 +1,7 @@
+# import json
 import sched
 import threading
+# import urllib.request
 from pathlib import Path
 from time import sleep
 
@@ -46,7 +48,7 @@ class DeviceByFile:
 
 
 # Przyklad innego typu urzadzenia
-#
+
 # class DeviceByHTTP:
 #     def __init__(self, identifier: str, param_list: list, ip_address: str, port: int):
 #         self.id = identifier
@@ -55,10 +57,8 @@ class DeviceByFile:
 #         self.port = port
 #
 #     def data(self) -> str:
-#         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-#             sock.connect((self.ip_address, self.port))
-#             response = sock.recv(1024)
-#             return str(response)
+#         return json.dumps(
+#             json.load(urllib.request.urlopen(f'http://{self.ip_address}:{self.port}/parameters'))['parameters'])
 
 
 def main():
@@ -67,7 +67,7 @@ def main():
         DeviceByFile('1', ['current', 'voltage', 'pressure'], './devices/zasilacz_00001.json'),
         DeviceByFile('2', ['current', 'voltage'], './devices/zasilacz_00002.json'),
         DeviceByFile('3', ['current', 'voltage'], './devices/zasilacz_00003.json'),
-        # DeviceByHTTP('4', ['current', 'voltage', 'pressure'], '127.0.0.1', 6666),
+        # DeviceByHTTP('4', ['current', 'voltage', 'pressure'], '127.0.0.1', 3000),
     ]
 
     # Jak czesto odswiezac parametry urzadzen
