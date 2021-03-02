@@ -46,7 +46,7 @@ def test_stop(interval, devices_list):
     sleep(3)
 
     # Sprawdzenie czy watek zostal zamkniety i czy zostaly 'wyzerowane' zmienne oraz czy kolejka schedulera jest pusta
-    assert (len(threading.enumerate()) == 1)\
+    assert (len(threading.enumerate()) == 1) \
            and (dm.running is False) \
            and dm.statuses == {} \
            and not dm.s.queue, 'Thread wasnt properly closed!'

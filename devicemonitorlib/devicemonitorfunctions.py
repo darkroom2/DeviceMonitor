@@ -113,4 +113,3 @@ def update_status(device):
 
     with lock:
         statuses[str(device.id)] = altered_parsed_data
-
